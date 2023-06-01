@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: init-sql-configmap
+data:
+  init.sql: |
+    CREATE TABLE `delivery` (
+      `id` int not null AUTO_INCREMENT,
+      `name` varchar(32) not null,
+      `result` boolean not null default 0,
+      PRIMARY KEY (`id`)
+    );
+
+    INSERT INTO `delivery` (name, result) VALUES ('dusdj', 1);

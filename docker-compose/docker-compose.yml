@@ -1,0 +1,30 @@
+version: "3.1"
+
+services:
+  db:
+    image: dusdjhyeon/mysql:8.0
+    restart: always
+    volumes:
+    - db_data:/var/lib/mysql
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mydelivery
+      MYSQL_ROOT_PASSWORD: password
+  app:
+    image: dusdjhyeon/delivery:1.0
+    depends_on:
+    - db
+    environment:
+    - MYSQL_HOST=db
+    - MYSQL_PORT=3306
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=password
+    - MYSQL_DATABASE=mydelivery
+    ports:
+    - "8000:8000"
+    restart: always
+
+volumes:
+  db_data:
